@@ -4,8 +4,10 @@ import random
 
 
 def test_positive():
-    employee_id = random.choice([1, 2, 3])
+    resp = employee_client.get_employees()
+    employee_ids = [employee["id"] for employee in resp.json()]
+    employee_id = random.choice(employee_ids)
 
     response = employee_client.get_employee_by_id(employee_id)
     assert response.status_code == 200, "Статус код не соответствует ожидаемому"
-    assert CheckerGeneral().validate_items(response.json(), "schemas/employees.json")
+    assert CheckerGeneral().validate_json(response.json(), "schemas/employee.json")
