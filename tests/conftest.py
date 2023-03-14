@@ -25,7 +25,6 @@ class Application:
     def delete_employee_post_condition(self):
         self.api_client.employee.delete_employee(self.employee_id)
 
-    # не моя задача, но я сделала, что бы проверить тест
     def create_user_precondition(self):
         username = "autotest_" + "".join(random.sample(string.ascii_letters, 5))
         age = random.randint(0, 120)
@@ -36,7 +35,6 @@ class Application:
         assert response.status_code == 200, "can't create user"
         self.user_id = response.json()["id"]
 
-    #тут я добавила delete user
     def delete_user_post_condition(self):
         self.api_client.user.delete_user(self.user_id)
 
@@ -45,12 +43,16 @@ fixture = Application()
 
 
 @pytest.fixture(scope="session")
-def application():
+def employee_fixture():
     # before yield is precondition
     fixture.create_employee_precondition()
-    fixture.create_user_precondition()
-
     yield fixture
     # after yield is post_condition
     fixture.delete_employee_post_condition()
+
+
+@pytest.fixture(scope="session")
+def user_fixture():
+    fixture.create_user_precondition()
+    yield fixture
     fixture.delete_user_post_condition()

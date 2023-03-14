@@ -7,7 +7,7 @@ import pytest
     ("Ivan", 5, "dfhurieg", ["idk"], 422)
 ])
 
-def test_negative(application, username, age, address, accessed_catalog, exp_code):
-    response = application.api_client.user.create_user(username, age, address, accessed_catalog)
+def test_negative(user_fixture, username, age, address, accessed_catalog, exp_code):
+    response = user_fixture.api_client.user.create_user(username, age, address, accessed_catalog)
 
     assert response.status_code == exp_code, "Статус код не соответствует ожидаемому"
