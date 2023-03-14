@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session, DeclarativeBase
 from config import DB_URL
 
 
-DB_URL = "sqlite:///basic_db.sqlite3"
+# DB_URL = "sqlite:///basic_db.sqlite3"
 engine = create_engine(url=DB_URL, echo=False)  # engine for connect application with DataBase
 session_factory = sessionmaker(bind=engine)
 Session = scoped_session(session_factory)
